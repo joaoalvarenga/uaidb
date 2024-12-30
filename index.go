@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	"log"
 	"strings"
 )
 
@@ -63,7 +63,7 @@ func Insert(node IndexNode, ap *IndexPage, grown *bool, outputNode *IndexNode, o
 		i++
 	}
 	if node.Value == ap.R[i-1].Value {
-		fmt.Println("Chave já presente")
+		log.Fatal("Key already exists")
 		*grown = false
 		return
 	}
@@ -126,7 +126,7 @@ func PrintNode(page *IndexPage, level int) {
 	}
 	for i := 0; i < page.N; i++ {
 		PrintNode(page.P[i], level+1)
-		fmt.Printf("%s├── %d\n", strings.Repeat(" ", 4*level), page.R[i].Value)
+		log.Printf("%s├── %d\n", strings.Repeat(" ", 4*level), page.R[i].Value)
 
 	}
 	if page.P[page.N] != nil {
@@ -158,7 +158,7 @@ func (t *Index) Search(key IndexNodeKey) *IndexNode {
 
 func (t *Index) Print() {
 	if t.Root == nil {
-		fmt.Println("Empty index")
+		log.Printf("Empty index")
 	}
 	PrintNode(t.Root, 1)
 }
